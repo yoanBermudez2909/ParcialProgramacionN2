@@ -2,26 +2,49 @@ package model;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Funcion {
+
     private String codigo;
     private LocalDate fehca;
     private LocalTime horaInicio;
     private double precioBase;
+    private Sala sala;
+    private Pelicula pelicula;
+    private List<Venta> listFuncionVentas;
 
-    private List<Sala>listFuncionSala;
-    private List<Pelicula>listFuncionPelicula;
+    public Funcion(String codigo, LocalDate fehca, LocalTime horaInicio,
+                   double precioBase, Sala sala, Pelicula pelicula) {
 
-    public Funcion(String codigo, LocalDate fehca, LocalTime horaInicio, double precioBase, List<Sala> listFuncionSala, List<Pelicula> listFuncionPelicula) {
         this.codigo = codigo;
         this.fehca = fehca;
         this.horaInicio = horaInicio;
         this.precioBase = precioBase;
+        this.sala = sala;
+        this.pelicula = pelicula;
+    }
 
-        this.listFuncionSala = new ArrayList<>();
-        this.listFuncionPelicula = new ArrayList<>();
+    public boolean asientoDisponible(int fila, int numero) {
+
+        for(Venta venta : listFuncionVentas){
+
+            for(Boleta boleta : venta.getListVentaBoletas()){
+
+                if(boleta.getFila() == fila && boleta.getNumeroAsiento() == numero){
+
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public LocalTime calcularHoraFinal() {
+        return horaInicio.plusMinutes(
+                pelicula.getDuracionMinutos()
+        );
     }
 
     public String getCodigo() {
@@ -56,20 +79,20 @@ public class Funcion {
         this.precioBase = precioBase;
     }
 
-    public List<Sala> getListFuncionSala() {
-        return listFuncionSala;
+    public Sala getSala() {
+        return sala;
     }
 
-    public void setListFuncionSala(List<Sala> listFuncionSala) {
-        this.listFuncionSala = listFuncionSala;
+    public void setSala(Sala sala) {
+        this.sala = sala;
     }
 
-    public List<Pelicula> getListFuncionPelicula() {
-        return listFuncionPelicula;
+    public Pelicula getPelicula() {
+        return pelicula;
     }
 
-    public void setListFuncionPelicula(List<Pelicula> listFuncionPelicula) {
-        this.listFuncionPelicula = listFuncionPelicula;
+    public void setPelicula(Pelicula pelicula) {
+        this.pelicula = pelicula;
     }
 
     @Override
@@ -79,8 +102,8 @@ public class Funcion {
                 ", fehca=" + fehca +
                 ", horaInicio=" + horaInicio +
                 ", precioBase=" + precioBase +
-                ", listFuncionSala=" + listFuncionSala +
-                ", listFuncionPelicula=" + listFuncionPelicula +
+                ", sala=" + sala +
+                ", pelicula=" + pelicula +
                 '}';
     }
 }

@@ -9,6 +9,7 @@ public abstract class  Sala {
     private  String nombre;
     private  int CapacidadMaxima;
     private List<Asiento> listSalaAsientos;
+    private List<Funcion> listSalaFunciones;
 
     public Sala(String codigo, String nombre, int capacidadMaxima) {
         this.codigo = codigo;
@@ -16,6 +17,7 @@ public abstract class  Sala {
         this.CapacidadMaxima = capacidadMaxima;
 
         this.listSalaAsientos = new ArrayList<>();
+        this.listSalaFunciones = new ArrayList<>();
     }
 
     public abstract double calcularPrecioBoleta(double precioBase);
